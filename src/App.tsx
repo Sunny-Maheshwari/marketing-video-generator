@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Suplimax from "./pages/Suplimax";
 import RealEstate from "./pages/RealEstate";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/real-estate" element={<RealEstate />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

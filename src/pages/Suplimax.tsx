@@ -26,6 +26,7 @@ const Suplimax = () => {
   };
 
   return (
+        <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white p-4">
     <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 mb-6 text-center leading-tight">
         🥤 <span className="block sm:inline">Generate Suplimax</span>
@@ -105,6 +106,7 @@ const Suplimax = () => {
           <VideoPlayer videoUrl={videoUrl} />
         </div>
       )}
+    </div>
     </div>
   );
 };
