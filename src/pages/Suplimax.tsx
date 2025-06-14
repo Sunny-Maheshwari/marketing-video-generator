@@ -1,6 +1,5 @@
 import { useState } from "react";
 import VideoPlayer from "../components/VideoPlayer";
-import { motion } from "framer-motion";
 
 const Suplimax = () => {
   const [features, setFeatures] = useState("");
@@ -15,92 +14,56 @@ const Suplimax = () => {
     setLoading(true);
     setVideoUrl("");
 
-    try {
-      const res = await fetch("http://localhost:5000/api/suplimax", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ features, tone, audience, style }),
-      });
+    const res = await fetch("http://localhost:5000/api/suplimax", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ features, tone, audience, style }),
+    });
 
-      const data = await res.json();
-      console.log(data.videoUrl);
-      setVideoUrl(data.videoUrl);
-    } catch (error) {
-      console.error("Error generating video:", error);
-    } finally {
-      setLoading(false);
-    }
+    const data = await res.json();
+    setVideoUrl(data.videoUrl);
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-yellow-100 via-red-100 to-pink-200 py-12 px-4">
-      <div className="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl font-bold text-center text-red-600 mb-6"
-        >
-          🥤 Suplimax Video Generator
-        </motion.h1>
+    <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-8">
+      <h1 className="text-2xl sm:text-3xl font-bold text-purple-600 dark:text-purple-400 mb-6 text-center leading-tight">
+        🥤 <span className="block sm:inline">Generate Suplimax</span>
+        <span className="block sm:inline">Marketing Video</span>
+      </h1>
 
-        <div className="flex justify-center mb-8">
-          <img
-            src="https://via.placeholder.com/120x180.png?text=Suplimax+Drink"
-            alt="Suplimax"
-            className="rounded-xl shadow-lg"
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="font-semibold block mb-1">Product Features</label>
+          <textarea
+            className="form-textarea w-full"
+            rows={4}
+            value={features}
+            onChange={(e) => setFeatures(e.target.value)}
+            placeholder="e.g. Boosts energy, zero sugar, mango flavor"
+            required
           />
         </div>
 
-        <motion.form
-          onSubmit={handleSubmit}
-          className="space-y-5"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-semibold mb-1">Product Features</label>
-            <textarea
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
-              rows={4}
-              placeholder="e.g. Boosts energy, zero sugar, mango flavor..."
-              value={features}
-              onChange={(e) => setFeatures(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold mb-1">Tone</label>
+            <label className="font-semibold block mb-1">Tone</label>
             <select
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
+              className="form-select w-full"
               value={tone}
               onChange={(e) => setTone(e.target.value)}
             >
               <option value="energetic">Energetic</option>
-              <option value="professional">Professional</option>
               <option value="funny">Funny</option>
               <option value="motivational">Motivational</option>
+              <option value="professional">Professional</option>
             </select>
           </div>
 
           <div>
-            <label className="block font-semibold mb-1">Target Audience</label>
-            <input
-              type="text"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
-              placeholder="e.g. Athletes, Gamers, Students"
-              value={audience}
-              onChange={(e) => setAudience(e.target.value)}
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold mb-1">Video Style</label>
+            <label className="font-semibold block mb-1">Video Style</label>
             <select
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-300"
+              className="form-select w-full"
               value={style}
               onChange={(e) => setStyle(e.target.value)}
             >
@@ -109,32 +72,39 @@ const Suplimax = () => {
               <option value="minimal">Minimal</option>
             </select>
           </div>
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded-xl transition"
-            disabled={loading}
-          >
-            {loading ? "Generating..." : "🔘 Generate Video"}
-          </button>
-        </motion.form>
+        <div>
+          <label className="font-semibold block mb-1">Target Audience</label>
+          <input
+            type="text"
+            className="form-input w-full"
+            placeholder="e.g. Athletes, Students, Gamers"
+            value={audience}
+            onChange={(e) => setAudience(e.target.value)}
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 px-6 rounded-md hover:opacity-90 transition"
+          disabled={loading}
+        >
+          {loading ? "Generating..." : "🎬 Generate Video"}
+        </button>
+      </form>
 
-        {loading && (
-          <div className="text-center mt-8 animate-pulse text-red-500 font-semibold">
-            Please wait while we generate your Suplimax video...
-          </div>
-        )}
+      {loading && (
+        <div className="text-center mt-6 text-purple-500 font-semibold animate-pulse">
+          Generating your video, please wait...
+        </div>
+      )}
 
-        {videoUrl && !loading && (
-          <motion.div
-            className="mt-10"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <VideoPlayer videoUrl={videoUrl} />
-          </motion.div>
-        )}
-      </div>
+      {videoUrl && !loading && (
+        <div className="mt-10">
+          <VideoPlayer videoUrl={videoUrl} />
+        </div>
+      )}
     </div>
   );
 };

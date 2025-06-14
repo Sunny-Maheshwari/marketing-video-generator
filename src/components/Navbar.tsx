@@ -12,11 +12,12 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-900 shadow-md text-white sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-purple-400 tracking-wide">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h1 className="text-xl font-bold text-purple-400 tracking-wide text-center sm:text-left">
           🚀 Marketing Video Generator
         </h1>
-        <div className="flex space-x-3">
+
+        <div className="flex justify-center sm:justify-end gap-2 flex-wrap">
           <Link to="/suplimax" className={linkClasses("/suplimax")}>
             Suplimax
           </Link>
