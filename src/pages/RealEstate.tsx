@@ -16,13 +16,15 @@ const RealEstate = () => {
       "Luxury estate, three-car garage, landscaped grounds, grand staircase, modern design",
   });
 
+  const baseURL: any = import.meta.env.VITE_API_URL;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setVideoUrl("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/real-estate`, {
+      const res = await fetch(`${baseURL}/api/real-estate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ style, property }),
