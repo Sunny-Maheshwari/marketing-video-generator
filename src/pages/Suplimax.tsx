@@ -10,6 +10,7 @@ const Suplimax = () => {
   const [loading, setLoading] = useState(false);
 
   const baseURL: any = import.meta.env.VITE_API_URL;
+  console.log("API Base URL:", import.meta.env.VITE_API_URL);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
