@@ -14,7 +14,7 @@ const Suplimax = () => {
     setLoading(true);
     setVideoUrl("");
 
-    const res = await fetch("http://localhost:5000/api/suplimax", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/suplimax`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ features, tone, audience, style }),
